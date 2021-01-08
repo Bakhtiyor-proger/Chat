@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    {% load static %}
+    <link href="{% static "img/no_image.png" %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <script>
+        setInterval(function(){
+            $("#messages").load(document.URL + ' #messages');
+            }, 5000);
+    </script>
+
+</head>
+<body>
+<h1>Chat Bot</h1>
+
+<form action="." method="post" enctype="multipart/form-data" accept="image/*,image/jpeg">
+    {% if details.image %}
+        <p><img src="{{ details.image.url }}" width="200" height="200">
+    {% else %}
+        <img src="{% static "img/no_image.png" %}" width="200" height="200">
+    {% endif %}
+            &nbsp; Profilga surat qo'shish: {{ form.image }}</p>
+        <p><h3>{{ details.nickname }}</h3> Tahallusingizni kiriting: {{ form.nickname }}</p>
+    {% csrf_token %}
+    <p><input type="submit" value="Saqlash"></p> <br>
+</form>
+
+<a href="{% url 'likes' details.id %}">Like va Kommentariyalar</a>
+<br> <br>
+
+<h3>Do'stlar ro'yhati:</h3>
+{% for friend in friends %}
+    {% if friend.owner != details.owner %}
+        {% if friend.image %}
+            <a href="{% url 'comments' comment_to=friend.id commenter=details.id %}"> <img src="{{ friend.image.url }}" width="50" height="50"> </a>
+        {% else %}
+            <img src="{% static "img/no_image.png" %}" width="50" height="50">
+        {% endif %}
+        {{ friend.nickname }}
+        &emsp; &emsp; &emsp;
+    {% endif %}
+{% endfor %}
+
+<br> <br> <br>
+<div id="messages">
+    {% for mes in msg %}
+        {% if mes.user.owner != details.owner %}
+            <p>{{ mes.user.nickname }}:&emsp;{{ mes.message }}&emsp;&emsp;&emsp;{{ mes.created_at}}</p><br>
+        {% else %}
+            <p>&emsp;&emsp;&emsp;&emsp;&emsp; {{ mes.user.nickname }}:&emsp;{{ mes.message }}&emsp;&emsp;&emsp;&emsp;{{ mes.created_at}}</p><br>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<form action="." method="post">
+    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    {{ msg_form.message }} &nbsp; <input type="submit" value="Jo'natish"></p>
+    {% csrf_token %}
+</form>
+
+</body>
+</html>
+

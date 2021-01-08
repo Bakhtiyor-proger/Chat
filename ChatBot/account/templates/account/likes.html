@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Likes</title>
+    {% load static %}
+    <link href="{% static "img/like.png" %}" rel="stylesheet">
+    <link href="{% static "img/no_image.png" %}" rel="stylesheet">
+</head>
+<body>
+    {% if profile_owner.image %}
+        <p><img src="{{ profile_owner.image.url }}" width="200" height="200"></p>
+    {% else %}
+        <img src="{% static "img/no_image.png" %}" width="200" height="200">
+    {% endif %}
+    <h3>{{ profile_owner.nickname }}</h3>
+
+    <br>
+    {% for nn in profile_likes %}
+        <p>{{ nn.liked_from }}:<img src="{% static "img/like.png" %}" width="50" height="50"></p>
+    {% endfor %}
+
+    <br> <br> <br>
+    {% for comment in profile_comments %}
+        <p>{{ comment.posted }}:&emsp;{{ comment.body }}&emsp;&emsp;&emsp;{{ comment.created}}</p>
+    {% endfor %}
+</body>
+</html>

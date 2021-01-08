@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Bizning Chat Botimizga hush kelibsiz</h1><br>
+    <form action="." method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Chatga kirish"></p>
+    </form>
+    <br>
+    <p><a href="{% url 'register' %}">Ro'yhatdan o'tish uchun ushbu havolani bosing</a></p>
+</body>
+</html>

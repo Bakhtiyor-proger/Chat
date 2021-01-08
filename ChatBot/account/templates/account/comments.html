@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+    {% load static %}
+    <link href="{% static "img/like.png" %}" rel="stylesheet">
+</head>
+<body>
+
+<p><img src="{{ owner_comments.image.url }}" width="200" height="200"></p>
+<h3>{{ owner_comments.nickname }}</h3>
+
+<br>
+<form action="." method="POST">
+    {% if like_up %}
+
+        {% for nn in like_up %}
+            {% if nn.liked_from != owner_profile %}
+                <p>{{ nn.liked_from }}:<img src="{% static "img/like.png" %}" width="50" height="50"></p>
+            {% endif %}
+        {% endfor %}
+
+        {% if like_owner %}
+            <p>Siz:<img src="{% static "img/like.png" %}" width="50" height="50"></p>
+        {% else %}
+            <h4><em>Surat yoqgan bo'lsa: <input type="submit" value="Layk bosing"><input type="hidden" name="like" value="True"></em></h4>
+        {% endif %}
+
+    {% else %}
+        <h4><em>Surat yoqgan bo'lsa: <input type="submit" value="Layk bosing"><input type="hidden" name="like" value="True"></em></h4>
+    {% endif %}
+
+</form>
+    <br> <br>
+    <h4><em>Kommentariyalar:</em></h4>
+
+    {% for comment in user_comments %}
+        <p>{{ comment.posted }}:&emsp;{{ comment.body }}&emsp;&emsp;&emsp;{{ comment.created}}</p>
+    {% endfor %}
+
+    <br>
+    <form action="." method="POST">
+        <p>{{ comment_form.body }}</p>
+        <p><input type="submit" value="Comment"></p>
+</form>
+
+</body>
+</html>
+

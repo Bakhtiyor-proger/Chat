@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<form action="." method="POST">
+    {{ user_form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Ro'yhatdan o'tish"></p>
+</form>
+</body>
+</html>
